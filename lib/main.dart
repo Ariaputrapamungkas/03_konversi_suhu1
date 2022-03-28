@@ -16,55 +16,34 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  double _inputUser = 0;
-  double _result = 0;
-
-  String _selectedDropdown = "Silahkan Pilih Suhu";
-  final _listSatuanSuhu = ["Silahkan Pilih Suhu", "Kelvin", "Reamur"];
-  List<String> _listHasil = [];
   TextEditingController etInput = TextEditingController();
+  // variable berubah
+  double _inputUser = 0;
+  double _kelvin = 0;
+  double _fahrenheit = 0;
+  double _reamur = 0;
 
-  _onChangedDropdown(String value) {
+  konvertHandler() {
     setState(() {
-      _selectedDropdown = value;
-    });
-    _convertHandler();
-  }
-
-  _convertHandler() {
-    setState(() {
-      if (etInput.text.isNotEmpty) {
-        _inputUser = double.parse(etInput.text);
-        switch (_selectedDropdown) {
-          case "Kelvin":
-            _result = _inputUser + 273;
-            _listHasil.add("Konversi dari: $_inputUser ke $_result Kelvin");
-            break;
-          case "Reamur":
-            _result = _inputUser * 4 / 5;
-            _listHasil.add("Konversi dari: $_inputUser ke $_result Reamur");
-            break;
-          default:
-            _listHasil.add("Suhu belum dipilih");
-            break;
-        }
-      } else {
-        _listHasil.add("Suhu belum dipilih dan Celcius kosong");
-      }
+      _inputUser = double.parse(etInput.text);
+      _kelvin = _inputUser + 273;
+      _reamur = 4 / 5 * _inputUser;
+      _fahrenheit = _inputUser * 9 / 5 + 32;
     });
   }
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Konversi Suhu - Aria Putra Pamungkas_2031710132',
+      title: 'Konverter Suhu',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Konverter Suhu"),
+          title: const Text("Konverter Suhu Moh. Iqbal Waldan (2031710139)"),
         ),
         body: Container(
           margin: const EdgeInsets.all(8),
@@ -72,12 +51,24 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Input(etInput: etInput),
-              Dropdown(
-                  selectedDropdown: _selectedDropdown,
-                  listSatuanSuhu: _listSatuanSuhu,
-                  onChangedDropdown: _onChangedDropdown),
-              Konversi(convertHandler: _convertHandler),
-              Result(listHasil: _listHasil)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Result(
+                    result: _kelvin,
+                    title: "Kelvin",
+                  ),
+                  Result(
+                    result: _reamur,
+                    title: "Reamur",
+                  ),
+                  Result(
+                    result: _fahrenheit,
+                    title: "Fahrenheit",
+                  ),
+                ],
+              ),
+              Convert(konvertHandler: konvertHandler),
             ],
           ),
         ),

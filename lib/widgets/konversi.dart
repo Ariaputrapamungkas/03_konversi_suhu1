@@ -3,25 +3,24 @@ import 'package:flutter/material.dart';
 class Konversi extends StatelessWidget {
 	const Konversi({
   	Key? key,
-	  required this.convertHandler,
-	}) : super(key: key);
-	
-	final Function convertHandler;
-	
-	@override
-	Widget build(BuildContext context) {
-	  return MaterialButton(
-	    onPressed: () {
-	      convertHandler();
-	    },
-	    child: const Text(
-	    "Konversikan",
-	    style: TextStyle(fontSize: 20),
-	    ),
-	    color: Colors.blue,
-	    textColor: Colors.black,
-	    minWidth: double.maxFinite,
-	    height: 50,
-	  );
-	}
+    required this.konvertHandler,
+  }) : super(key: key);
+
+  final VoidCallback konvertHandler;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 50,
+      child: RaisedButton(
+        onPressed: konvertHandler,
+        child: const Text(
+          "Konversi Suhu",
+          style: TextStyle(color: Colors.white),
+        ),
+        color: Colors.blue,
+      ),
+    );
+  }
 }
